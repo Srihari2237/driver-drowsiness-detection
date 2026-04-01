@@ -1,56 +1,115 @@
-# 🚗 Driver Drowsiness Detection System
+# 🚗 Driver AI Monitoring System
 
 ## 📌 Overview
 
-The **Driver Drowsiness Detection System** is a real-time computer vision application that monitors a driver’s alertness using facial landmarks. It detects signs of fatigue such as eye closure and yawning, and alerts the driver to prevent accidents.
+The **Driver AI Monitoring System** is an advanced real-time computer vision application designed to enhance road safety by detecting driver fatigue and distraction.
+It uses facial landmarks, eye tracking, head pose estimation, and behavioral analysis to monitor the driver's alertness continuously.
 
 ---
 
-## 🎯 Features
+## 🎯 Key Features
 
-* 👁️ Eye Aspect Ratio (EAR) based drowsiness detection
-* 😮 Mouth Aspect Ratio (MAR) based yawning detection
-* 🚨 Real-time alert system (alarm sound)
-* 📊 Live EAR trend graph
-* 📉 Fatigue score monitoring
-* 🎨 Modern dashboard UI using Streamlit
-* 🎥 Real-time webcam integration
+* 👁️ **Drowsiness Detection (EAR)**
+* 😮 **Yawning Detection (MAR)**
+* 👀 **Gaze Tracking (Pupil Movement)**
+* 🧠 **Head Pose Detection (Yaw & Drop)**
+* 🚨 **Real-Time Alarm System**
+* 📊 **Live Analytics Dashboard (Streamlit UI)**
+* 📈 **Multi-Graph Visualization (EAR, MAR, Gaze, Head)**
+* 📄 **Session Report Generation (CSV Download)**
+* 🧪 **Dynamic Calibration System (Adaptive Thresholds)**
+* 🕶️ **Robust to Glasses / Lighting Conditions**
 
 ---
 
 ## 🧠 Technologies Used
 
 * **Python**
-* **OpenCV** – Video processing
+* **OpenCV** – Real-time video processing
 * **MediaPipe** – Facial landmark detection
-* **NumPy & SciPy** – Mathematical computations
-* **Streamlit** – Web-based UI
-* **PIL (Pillow)** – Image processing
+* **NumPy / Math** – Feature calculations
+* **Streamlit** – Interactive dashboard UI
+* **Pygame** – Alarm sound system
+* **Pandas** – Data analysis & reporting
 
 ---
 
 ## ⚙️ How It Works
 
 1. Captures live video from webcam
-2. Detects face and extracts facial landmarks
-3. Computes:
+2. Detects facial landmarks using MediaPipe
+3. Computes key metrics:
 
-   * **EAR (Eye Aspect Ratio)** → Detects eye closure
-   * **MAR (Mouth Aspect Ratio)** → Detects yawning
-4. Classifies driver state:
+   * **EAR (Eye Aspect Ratio)** → Eye closure detection
+   * **MAR (Mouth Aspect Ratio)** → Yawning detection
+   * **Gaze Ratio** → Pupil direction tracking
+   * **Head Pose** → Distraction & head drop
+4. Applies:
+
+   * **Smoothing filters**
+   * **Dynamic calibration (first few frames)**
+5. Classifies driver state:
 
    * ALERT
-   * SEMI-DROWSY
    * DROWSY
    * YAWNING
-5. Triggers alarm if fatigue is detected
-6. Displays results in a real-time dashboard
+   * DISTRACTED
+   * HEAD DROP
+   * CRITICAL DISTRACTION
+6. Triggers alarm if unsafe condition detected
+7. Displays live dashboard + analytics
+
+---
+
+## 📊 System Architecture
+
+```text
+Webcam Input
+     ↓
+Face Detection (MediaPipe)
+     ↓
+Feature Extraction
+(EAR, MAR, Gaze, Head Pose)
+     ↓
+Temporal Analysis (Counters + Buffers)
+     ↓
+State Classification
+     ↓
+Alarm System + UI Dashboard
+```
+
+---
+
+## 📁 Project Structure
+
+```
+driver-drowsiness-detection/
+│
+├── app.py                  # Streamlit dashboard
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── src/
+│   ├── detector.py         # Core detection logic
+│   ├── ear.py              # EAR calculation
+│   ├── mar.py              # MAR calculation
+│   └── alarm.py            # Alarm system
+│
+├── utils/
+│   ├── config.py           # Thresholds & settings
+│   └── visualization.py    # Drawing utilities
+│
+├── assets/
+│   └── sounds/
+│       └── alarm.wav
+```
 
 ---
 
 ## 🚀 Installation & Setup
 
-### 1️⃣ Clone the Repository
+### 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/your-username/driver-drowsiness-detection.git
@@ -63,7 +122,7 @@ cd driver-drowsiness-detection
 
 ```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
+venv\Scripts\activate
 ```
 
 ---
@@ -76,7 +135,7 @@ pip install -r requirements.txt
 
 ---
 
-### 4️⃣ Run the Application
+### 4️⃣ Run Application
 
 ```bash
 streamlit run app.py
@@ -86,76 +145,38 @@ streamlit run app.py
 
 ## 📊 Output
 
-* Real-time video feed
-* Driver status display (ALERT / DROWSY / YAWNING)
-* EAR & MAR values
-* Fatigue score indicator
-* Live graph of eye activity
+* 🎥 Live camera feed
+* 📈 Real-time graphs (EAR, MAR, Gaze, Head)
+* 🚦 Driver status indicator
+* 🔊 Alarm alerts
+* 📄 Downloadable session report
 
 ---
 
-## 🖼️ Screenshots
+## 🧠 Detection Logic Highlights
 
-> (Add your screenshots here for better presentation)
-
-Example:
-
-* Dashboard UI
-* Alert state
-* Graph visualization
-
----
-
-## 📁 Project Structure
-
-```
-driver-drowsiness-detection/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-│
-├── src/
-│   ├── detector.py
-│   ├── ear.py
-│   ├── mar.py
-│   └── alarm.py
-│
-├── utils/
-│   ├── config.py
-│   └── visualization.py
-│
-├── assets/
-│   └── sounds/
-│
-└── .gitignore
-```
-
----
-
-## 🧠 Applications
-
-* 🚗 Driver safety systems
-* 🚛 Fleet monitoring
-* 🚘 Smart vehicles
-* 🏥 Fatigue detection in workplaces
+* **Adaptive thresholds** using calibration phase
+* **Smoothing buffers** to reduce noise (especially with glasses)
+* **Multi-signal fusion** (eyes + mouth + head + gaze)
+* **Time-based detection** using frame counters
 
 ---
 
 ## ⚠️ Limitations
 
-* Depends on lighting conditions
-* Requires visible face
-* Webcam-based system (local execution preferred)
+* Requires good lighting conditions
+* Performance depends on system hardware
+* Streamlit is not a true real-time engine
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Voice alert system
-* Mobile app integration
-* Cloud deployment with WebRTC
-* Deep learning model integration
+* 📱 Mobile app integration
+* 🌐 WebRTC deployment
+* 🧠 Deep learning-based classification
+* 🎤 Voice alert system
+* ☁️ Cloud-based monitoring
 
 ---
 
@@ -165,14 +186,18 @@ driver-drowsiness-detection/
 
 ---
 
-## ⭐ Acknowledgement
+## ⭐ Project Value
 
-This project demonstrates the application of **Machine Learning and Computer Vision** techniques in real-world safety systems.
+This project demonstrates a **real-world AI safety system** combining:
+
+* Computer Vision
+* Human behavior analysis
+* Real-time UI systems
 
 ---
 
 ## 📌 Note
 
-For best performance, run the application locally with webcam support.
+For best performance, run the application on a system with good processing capability and keep the device plugged in.
 
 ---
