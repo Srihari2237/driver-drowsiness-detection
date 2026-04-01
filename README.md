@@ -103,6 +103,9 @@ driver-drowsiness-detection/
 ├── assets/
 │   └── sounds/
 │       └── alarm.wav
+docs/
+├── architecture.png  
+└── report.pdf 
 ```
 
 ---
@@ -141,6 +144,14 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+---
+## 📊 System Architecture
+
+![Architecture](assets/architecture.png)
+---
+## 📄 Project Report
+
+[Download Full Report](docs/report.pdf)
 ---
 
 ## 📊 Output
