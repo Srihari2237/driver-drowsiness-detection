@@ -1,28 +1,22 @@
-EAR_THRESHOLD = 0.20
-EAR_SEMI_THRESHOLD = 0.27
-
+# config.py
+EAR_THRESHOLD = 0.25
+EAR_SEMI_THRESHOLD = 0.28
 MAR_THRESHOLD = 0.60
-
-DROWSY_FRAMES = 20
-
+DROWSY_FRAMES = 10
 ALARM_SOUND = "assets/sounds/alarm.wav"
-# --- CALIBRATION SETTINGS ---
-# Number of frames to analyze to calculate the user's normal baseline
-CALIBRATION_FRAMES = 60 
 
-# Multipliers for dynamic thresholds
-EAR_DROP_PERCENTAGE = 0.75  # Alarm triggers if eyes close by 25% of baseline
-MAR_RISE_PERCENTAGE = 1.5   # Alarm triggers if mouth opens 50% wider than baseline
-# --- HEAD DROP SETTINGS ---
-# Threshold for vertical head compression (Pitch)
-# If (Nose-to-Chin distance / Face-Width) drops below this, head is down.
-HEAD_DROP_THRESHOLD = 0.35
-# --- GAZE / DISTRACTION SETTINGS ---
-# Deviation threshold (How far from center the pupil moves)
-# 0.5 is center, < 0.35 is looking left/up, > 0.65 is looking right/down
-GAZE_THRESH_L = 0.40
-GAZE_THRESH_R = 0.60
-GAZE_FRAMES = 30 # Number of frames to trigger "DISTRACTED"
-# --- SPECS OPTIMIZATION ---
-# Number of frames to average for smoothing (Prevents flicker from glasses glare)
+# Advanced Features
+CALIBRATION_FRAMES = 60
 SMOOTHING_WINDOW = 3
+EAR_DROP_PERCENTAGE = 0.75
+MAR_RISE_PERCENTAGE = 1.5
+
+# Distraction & Head Pose
+GAZE_THRESH_L = 0.45 
+GAZE_THRESH_R = 0.55
+GAZE_FRAMES = 40 # ~1.5 Seconds for normal distraction
+HEAD_DROP_THRESHOLD = 0.35 
+HEAD_TURN_THRESH_L = 0.38 
+HEAD_TURN_THRESH_R = 0.62
+CRITICAL_DISTRACTION_FRAMES = 55 # ~2 Seconds for both head + eyes away
+GAZE_HOLD_FRAMES = 20   # ~2 seconds (depends on FPS)
